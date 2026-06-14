@@ -1,0 +1,4 @@
+arXiv*/
+*.tar.gz
+backup/
+__pycache__/
