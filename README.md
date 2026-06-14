@@ -13,6 +13,10 @@ Note that the original experiments in the paper were done with Matlab. This pyth
 
 The code is vibe-coded with AI so let me know if you have any questions or you find any issue.
 
+## Note 
+
+If streaming norm gives you NaN in the beginning of training it doesn't mean the algorithm is problematic. Because the normalization depends on stable statistics in the beginning, one needs to check if there are enough warm-up feedforward minibatch passes of the data so that the streamining storage sees enough data to compute a reliable initial statistics. Usually a few minibatches will give you enough data but it depends on your choices of shorterm/longterm coefficients of alpha and beta. In general the algorithm should be robust across a relatively wide range of settings. Open a github issue if you need help.
+
 ## Overview
 
 Streaming Normalization maintains normalization statistics in an **online fashion** from all previously seen training samples (and all timesteps if recurrent). Unlike Batch Normalization, it works out of the box in all learning scenarios:
@@ -516,8 +520,7 @@ The original paper was implemented in **Matlab**. This Python/PyTorch implementa
 
 1. **Uses PyTorch autograd**: Implements streaming normalization as a custom autograd function
 2. **Automatic weight update detection**: The `weight_update_detector` is handled automatically - no manual setting required
-3. **Efficient storage**: Uses incremental averaging instead of storing full history (more memory efficient)
-4. **L2 normalization**: Currently implements L2 normalization (standard deviation). L1 normalization can be added as an extension.
+3. **L2 normalization**: Currently implements L2 normalization (standard deviation). L1 normalization can be added as an extension.
 
 ## Comparison with Other Methods
 
